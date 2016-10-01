@@ -83,7 +83,7 @@
 
 
 
-				<form:input type="file" path="image" />
+				<form:input type="file" path="image" required="true" />
 				<form:errors path="image" cssClass="error" />
 				<br>
 
@@ -107,7 +107,7 @@
 			<br>
 			<div class="row">
 				<div class="col-xs-6">
-					<a href="viewall"><button
+					<a href="<c:url value="/viewallproducts"/>"><button
 							class="btn btn-lg btn-primary btn-block signup-btn">View
 							all</button></a>
 

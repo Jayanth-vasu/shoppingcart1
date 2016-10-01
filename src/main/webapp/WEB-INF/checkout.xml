@@ -36,8 +36,13 @@
 		 <transition to="payment" /> 
 
 	</action-state>
+	
+	<view-state id="payment" view="payment" >
+		<transition on="proceed" to="invoice" />
+		
+	</view-state>
 
-<end-state id="payment" view="payment" />
+<end-state id="invoice" view="invoice" />
 		
 
 </flow>

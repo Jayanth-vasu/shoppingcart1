@@ -81,24 +81,7 @@ body, html {
 }
 </style>
 
-<script>
 
-function myFunction() {
-    var pass1 = document.getElementById("pass1").value;
-    var pass2 = document.getElementById("pass2").value;
-    var status = "success";
-    if (pass1 != pass2) {
-        //alert("Passwords Do not match");
-        document.getElementById("pass1").style.borderColor = "#E34234";
-        document.getElementById("pass2").style.borderColor = "#E34234";
-        status = "failure";
-        alert("Passwords does not Match!!!");
-    }
-    
-    return status;
-}
-
-</script>
 
 <div class="container" id="wrap">
 
@@ -110,7 +93,7 @@ function myFunction() {
 	
 		<div class="col-xs-6">
 			
-			<form:form modelAttribute="userDetails" accept-charset="utf-8" onsubmit="return myFunction()"  method="post"
+			<form:form modelAttribute="userDetails" accept-charset="utf-8"  method="post"
 				class="form" role="form">
 				
 				<h1>Sign Up</h1>
@@ -170,7 +153,7 @@ function myFunction() {
 
 
 
-				<form:password id="pass1" path="password" required="true"
+				<form:input type="password" id="password" path="password" name="password" required="true" 
 					class="form-control input-lg" placeholder="Password" />
 				<c:forEach
 					items="${flowRequestContext.messageContext.getMessagesBySource('password')}"
@@ -181,9 +164,8 @@ function myFunction() {
 				</c:forEach>
 				<br />
 
-
-				<form:password id="pass2" path="confirm_password" required="true"
-					class="form-control input-lg" placeholder="Confirm Password" />
+                <form:input type="password" id="confirmpassword" path="confirm_password"  name="confirmpassword" required="true"
+					class="form-control input-lg" placeholder="ConfirmPassword" />
 				<c:forEach
 					items="${flowRequestContext.messageContext.getMessagesBySource('confirm_password')}"
 					var="err">
@@ -192,6 +174,8 @@ function myFunction() {
 					</div>
 				</c:forEach>
 				<br />
+
+				
 
 
 
@@ -205,9 +189,27 @@ function myFunction() {
 
 					</div>
 				</div>
+				<script>
+
+ function validatePassword(){
+	 var password = document.getElementById("password")
+	 ,confirmpassword = document.getElementById("confirmpassword")
+	  
+	if(password.value != confirmpassword.value){
+		confirmpassword.setCustomValidity("Passwords Don't Match");
+	}
+	else {
+		confirmpassword.setCustomValidity("");
+	}
+	 
+}
+ password.onchange=validatePassword;
+ confirmpassword.onkeyup=validatePassword;	
+</script>
 			</form:form>
 
 		</div>
 	</div>
 </div>
+
 <%@include file="/WEB-INF/views/footer.jsp"%>

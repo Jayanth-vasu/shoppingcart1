@@ -42,7 +42,7 @@ public class Cart implements Serializable{
 	private List<ProductDetails> productList ;*/
 		
 	@OneToOne
-	@JoinColumn(name="user_firstname")
+	@JoinColumn(name="mail_id")
 	private UserDetails userDetails;
     
 	@OneToMany(mappedBy="cart",cascade=CascadeType.ALL)

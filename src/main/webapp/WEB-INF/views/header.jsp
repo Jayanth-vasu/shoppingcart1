@@ -72,9 +72,7 @@ body {
 	padding: 05px 10px;
 }
 
-.top-buffer {
-	margin-top: 10px;
-}
+
 
 .navbar-right {
 	float: right !important;
@@ -230,6 +228,18 @@ li a:hover {
     color: black;
 }
 
+/* #addtocart {
+	background-color: white; /* Green */
+	border: none;
+	color: white;
+	padding: 18px 8px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	width: 98%;
+} */
+
 </style>
 
 	<script>
@@ -325,11 +335,11 @@ li a:hover {
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav navbar-right">
 
-					<c:if test="${!empty pageContext.request.userPrincipal.name}">
-						<li><a href="<c:url value="#"/>"> Welcome
-								${pageContext.request.userPrincipal.name}</a></li>
-					</c:if>
-
+					
+<h6 align="right">
+			<c:if test="${!empty pageContext.request.userPrincipal.name}">
+						<a href="<c:url value="#"/>">Welcome ${pageContext.request.userPrincipal.name}</a>
+					</c:if></h6>
 					<li><a href="<c:url value="/index"/>" class="hvr-underline-from-center">HOME</a></li>
 					<li><a href="#services" class="hvr-underline-from-center">ABOUT US</a></li>
 
@@ -337,7 +347,7 @@ li a:hover {
 
 					<c:if test="${empty pageContext.request.userPrincipal.name}">
 						<li><a href="<c:url value="memberShip.obj"/>" class="hvr-underline-from-center"> SIGN UP</a></li>
-						<li><a href="<c:url value="login"/>" class="hvr-underline-from-center"> LOGIN</a></li>
+						<li><a href="<c:url value="/login"/>" class="hvr-underline-from-center"> LOGIN</a></li>
 					</c:if>
 
 					<sec:authorize access="hasRole('ROLE_USER')">
@@ -346,7 +356,7 @@ li a:hover {
 					</sec:authorize>
 
 					<sec:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="<c:url value="manage" />" class="hvr-underline-from-center"> MANAGE PRODUCTS</a></li>
+						<li><a href="<c:url value="/manage" />" class="hvr-underline-from-center"> MANAGE PRODUCTS</a></li>
 					</sec:authorize>
 
 

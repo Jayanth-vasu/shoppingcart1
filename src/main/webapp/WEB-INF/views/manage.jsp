@@ -15,7 +15,6 @@
 
 .box:cursor {
 	border: 2px solid #525C7A;
-	
 }
 
 .box span.box-title {
@@ -66,7 +65,7 @@
 							<hr />
 							<div class="row">
 								<div class="col-xs-6">
-									<a href="product">
+									<a href="<c:url value="/product"/>">
 										<button type="button" class="btn btn-labeled btn-success">
 											<span class="btn-label"><i
 												class="glyphicon glyphicon-plus"></i></span>Add Products
@@ -74,7 +73,8 @@
 									</a>
 								</div>
 								<div class="col-xs-6">
-									<a href="viewall">
+									<a
+										href="<c:url value="/viewallproducts"/>">
 										<button type="button" class="btn btn-labeled btn-primary">
 											<span class="btn-label"><i
 												class="glyphicon glyphicon-pencil"></i></span>Edit Products

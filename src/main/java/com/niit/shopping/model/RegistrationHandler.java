@@ -1,5 +1,10 @@
 package com.niit.shopping.model;
 
+import java.util.Arrays;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.binding.message.MessageBuilder;
 import org.springframework.binding.message.MessageContext;
@@ -43,14 +48,21 @@ public class RegistrationHandler {
 
 	}
 	
+	
+
+	
+	
 	@Autowired
 	RegistrationEmailAPI registrationEmailAPI;
 
 	/*@SuppressWarnings("resource")*/
-	public void sendMail(UserDetails userDetails) {
+	public String sendMail(UserDetails userDetails)throws AddressException,MessagingException {
 		/*String crunchifyConfFile = "application-context.xml";
 		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(crunchifyConfFile);
 		RegistrationEmailAPI registrationEmailAPI = (RegistrationEmailAPI) context.getBean("registrationEmail");*/
+		
+		String status="true";
+		
 		String toAddr = userDetails.getMail_id();
 		String fromAddr = "jayanthvasu89@gmail.com";
 		// email subject
@@ -58,7 +70,18 @@ public class RegistrationHandler {
 
 		// email body
 		String body = "Thank You for registering with JV Smartwatches";
+		
+		try{
 		registrationEmailAPI.readyToSendEmail(toAddr, fromAddr, subject, body);
+		}
+		catch(Exception e){
+			System.out.println("an exception occured"+e);
+			e.printStackTrace();
+			status="false";
+		}
+		
+				
+		return status;
 
 	}
 
@@ -89,16 +112,14 @@ public class RegistrationHandler {
 					new MessageBuilder().error().source("password").defaultText("Please enter your password").build());
 			status = "failure";
 		}
+		
 		if (userDetails.getConfirm_password() == null) {
-			messageContext.addMessage(new MessageBuilder().error().source("confirm_password")
-					.defaultText("Please enter your password").build());
+			messageContext.addMessage(
+					new MessageBuilder().error().source("password").defaultText("Please enter your password").build());
 			status = "failure";
 		}
-		/*if (userDetails.getConfirm_password() != userDetails.getPassword()) {
-			messageContext.addMessage(new MessageBuilder().error().source("confirm_password")
-					.defaultText("Password does not match").build());
-			status = "failure";
-		}*/
+		
+		
 		
 		
 		return status;

@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.niit.shopping.model.Cart;
 import com.niit.shopping.model.ProductDetails;
 import com.niit.shopping.model.ShippingAddress;
-import com.niit.shopping.model.UserDetails;
 
 @Repository
 @Transactional
@@ -91,7 +90,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cart> getCartByUser(String username) {
-		String hql = "from Cart where user_firstname=" + "'" + username + "'";
+		String hql = "from Cart where mail_id=" + "'" + username + "'";
 		Query query = session.getCurrentSession().createQuery(hql);
 		List<Cart> getCartByUser = (List<Cart>) query.list();
 		return getCartByUser;
@@ -101,7 +100,7 @@ public class ProductDAOImpl implements ProductDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Cart> getTotalPrice(String username) {
-		String hql = "select sum(productPrice) from Cart where user_firstname=" + "'" + username + "'";
+		String hql = "select sum(productPrice) from Cart where mail_id=" + "'" + username + "'";
 		Query query = session.getCurrentSession().createQuery(hql);
 		List<Cart> getTotalPrice = (List<Cart>) query.list();
 		return getTotalPrice;
@@ -124,7 +123,7 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public void clearall(String username) {
-		  session.getCurrentSession().createQuery("delete from Cart where user_firstname="+"'"+username+"'").executeUpdate();
+		  session.getCurrentSession().createQuery("delete from Cart where mail_id="+"'"+username+"'").executeUpdate();
 		
 	}
 
@@ -142,7 +141,7 @@ public class ProductDAOImpl implements ProductDAO {
 	public boolean checkProduct(Cart cart) {
 		boolean isvalid=false;
 		
-		Query q=session.openSession().createQuery("from Cart where product_id='"+cart.getProduct_id()+"' and user_firstname='"+cart.getCheckUser()+"'");
+		Query q=session.openSession().createQuery("from Cart where product_id='"+cart.getProduct_id()+"' and mail_id='"+cart.getCheckUser()+"'");
 		
 		List<Cart> ul= q.list();
 		int s=ul.size();
@@ -175,7 +174,7 @@ boolean isvalid=false;
 	@SuppressWarnings("unchecked")
 	@Override
 	public int cartNumber(String username) {
-		Query q=session.openSession().createQuery("from Cart where user_firstname="+"'"+username+"'");
+		Query q=session.openSession().createQuery("from Cart where mail_id="+"'"+username+"'");
 		List<Cart> ul= q.list();
 		int s=ul.size();
 		return s;

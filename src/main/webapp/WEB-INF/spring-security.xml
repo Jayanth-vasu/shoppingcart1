@@ -16,7 +16,7 @@
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />
 
-		<form-login login-page="/login" username-parameter="user_firstname"
+		<form-login login-page="/login" username-parameter="mail_id"
 			password-parameter="password" login-processing-url="/j_spring_security_check"
 			 default-target-url="/index" authentication-failure-url="/loginerror"/>
 
@@ -39,8 +39,8 @@
 
 
 			<jdbc-user-service data-source-ref="dataSource"
-				users-by-username-query="select user_firstname,password,enabled from UserDetails where user_firstname=?"
-				authorities-by-username-query="select u1.user_firstname, u2.role from UserDetails u1, UserRole u2 where u1.user_firstname = u2.user_firstname and u1.user_firstname=?" />
+				users-by-username-query="select mail_id,password,enabled from UserDetails where mail_id=?"
+				authorities-by-username-query="select u1.mail_id, u2.role from UserDetails u1, UserRole u2 where u1.mail_id = u2.mail_id and u1.mail_id=?" />
 
 		</authentication-provider>
 	</authentication-manager>

@@ -67,7 +67,8 @@ function goBack() {
 }
 </script>
 
-<div class="container" >
+<div class="container" data-ng-app="myApp"
+	data-ng-controller="viewallController">
 	<div class="row">
 		<div class="col-xs-8">
 			<button type="button" class="btn btn-primary" onclick="goBack()">Go
@@ -86,9 +87,8 @@ function goBack() {
 			</div>
 		</div>
 	</div>
-	</div>
-	<div class="container" data-ng-app="myApp"
-	data-ng-controller="viewallController">
+	
+	<div class="container" >
 		<h2></h2>
 
 
@@ -176,3 +176,6 @@ function goBack() {
 
 
 	</div>
+	</div>
+	
+	<%@ include file="/WEB-INF/views/footer.jsp"%>

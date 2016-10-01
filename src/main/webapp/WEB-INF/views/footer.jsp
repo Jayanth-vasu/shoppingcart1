@@ -66,6 +66,7 @@ $(document).ready(function(){
 
 });
 </script>
+
 <div class="panel panel-default">
 	<a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top"
 		role="button" title="Click to return on the top page"
@@ -73,6 +74,7 @@ $(document).ready(function(){
 		class="glyphicon glyphicon-chevron-up"></span></a>
 
 	<div class="panel-footer">@ Copyrights 2016</div>
-</div>
+	</div>
+
 </body>
 </html>

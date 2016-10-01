@@ -17,7 +17,8 @@
 	</view-state>
 
 	<action-state id="validate">
-		<evaluate expression="registrationHandler.validateDetails(userDetails,messageContext)"></evaluate>
+		<evaluate
+			expression="registrationHandler.validateDetails(userDetails,messageContext)"></evaluate>
 		<transition on="success" to="checkuser" />
 		<transition on="failure" to="start" />
 	</action-state>
@@ -27,26 +28,29 @@
 		<transition on="success" to="confirmDetails" />
 		<transition on="failure" to="alreadyExists" />
 	</action-state>
-	
-	
+
+
 	<view-state id="alreadyExists" view="alreadyExists" model="flowScope.userDetails">
 
 	</view-state>
 
 	<view-state id="confirmDetails" view="confirmDetails" model="flowScope.userDetails">
 		<transition on="edit" to="start" />
-		<transition on="submit" to="saveregister" />
+		<transition on="submit" to="sendmail" />
 	</view-state>
+
+
+	<action-state id="sendmail">
+		<evaluate expression="registrationHandler.sendMail(userDetails)"></evaluate>
+		<transition on="true" to="saveregister" />
+		<transition on="false" to="confirmDetails" />
+	</action-state>
 
 	<action-state id="saveregister">
 		<evaluate expression="registrationHandler.saveRegister(userDetails)"></evaluate>
-		<transition to="sendmail" />
-	</action-state>
-	
-	<action-state id="sendmail">
-		<evaluate expression="registrationHandler.sendMail(userDetails)"></evaluate>
 		<transition to="welcome" />
 	</action-state>
+
 
 	<end-state id="welcome" view="index" />
 	<end-state id="toHome" view="externalRedirect:contextRelative:index.jsp" />

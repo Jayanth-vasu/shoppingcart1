@@ -1,124 +1,235 @@
+
 <%@include file="/WEB-INF/views/header.jsp"%>
-
-
 <style>
-.submit-button {
-  margin-top: 10px;
+.pay ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 200px;
+	background-color: #f1f1f1;
+}
+
+.pay li a {
+	display: block;
+	color: #000;
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+.pay li a:hover {
+	background-color: #555;
+	color: white;
+}
+
+div.bhoechie-tab-container {
+	z-index: 10;
+	background-color: #ffffff;
+	padding: 0 !important;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	border: 1px solid #ddd;
+	margin-top: 20px;
+	margin-left: 50px;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	-moz-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	opacity: 0.97;
+	filter: alpha(opacity = 97);
+	width: 100%;
+}
+
+div.bhoechie-tab-menu {
+	padding-right: 0;
+	padding-left: 0;
+	padding-bottom: 0;
+}
+
+div.bhoechie-tab-menu div.list-group {
+	margin-bottom: 0;
+}
+
+div.bhoechie-tab-menu div.list-group>a {
+	margin-bottom: 0;
+}
+
+div.bhoechie-tab-menu div.list-group>a .glyphicon, div.bhoechie-tab-menu div.list-group>a .fa
+	{
+	color: #5A55A3;
+}
+
+div.bhoechie-tab-menu div.list-group>a:first-child {
+	border-top-right-radius: 0;
+	-moz-border-top-right-radius: 0;
+}
+
+div.bhoechie-tab-menu div.list-group>a:last-child {
+	border-bottom-right-radius: 0;
+	-moz-border-bottom-right-radius: 0;
+}
+
+div.bhoechie-tab-menu div.list-group>a.active, div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
+	div.bhoechie-tab-menu div.list-group>a.active .fa {
+	background-color: #5A55A3;
+	background-image: #5A55A3;
+	color: #ffffff;
+}
+
+div.bhoechie-tab-menu div.list-group>a.active:after {
+	content: '';
+	position: absolute;
+	left: 100%;
+	top: 50%;
+	margin-top: -13px;
+	border-left: 0;
+	border-bottom: 13px solid transparent;
+	border-top: 13px solid transparent;
+	border-left: 10px solid #5A55A3;
+}
+
+div.bhoechie-tab-content {
+	background-color: #ffffff;
+	/* border: 1px solid #eeeeee; */
+	padding-left: 20px;
+	padding-top: 10px;
+}
+
+div.bhoechie-tab div.bhoechie-tab-content:not (.active ){
+	display: none;
+}
+
+#debit {
+	padding-left: 150px;
 }
 </style>
-
-<script>
-$(function() {
-	  $('form.require-validation').bind('submit', function(e) {
-	    var $form         = $(e.target).closest('form'),
-	        inputSelector = ['input[type=email]', 'input[type=password]',
-	                         'input[type=text]', 'input[type=file]',
-	                         'textarea'].join(', '),
-	        $inputs       = $form.find('.required').find(inputSelector),
-	        $errorMessage = $form.find('div.error'),
-	        valid         = true;
-
-	    $errorMessage.addClass('hide');
-	    $('.has-error').removeClass('has-error');
-	    $inputs.each(function(i, el) {
-	      var $input = $(el);
-	      if ($input.val() === '') {
-	        $input.parent().addClass('has-error');
-	        $errorMessage.removeClass('hide');
-	        e.preventDefault(); // cancel on first error
-	      }
-	    });
-	  });
-	});
-
-	$(function() {
-	  var $form = $("#payment-form");
-
-	  $form.on('submit', function(e) {
-	    if (!$form.data('cc-on-file')) {
-	      e.preventDefault();
-	      Stripe.setPublishableKey($form.data('stripe-publishable-key'));
-	      Stripe.createToken({
-	        number: $('.card-number').val(),
-	        cvc: $('.card-cvc').val(),
-	        exp_month: $('.card-expiry-month').val(),
-	        exp_year: $('.card-expiry-year').val()
-	      }, stripeResponseHandler);
-	    }
-	  });
-
-	  function stripeResponseHandler(status, response) {
-	    if (response.error) {
-	      $('.error')
-	        .removeClass('hide')
-	        .find('.alert')
-	        .text(response.error.message);
-	    } else {
-	      // token contains id, last4, and card type
-	      var token = response['id'];
-	      // insert the token into the form so it gets submitted to the server
-	      $form.find('input[type=text]').empty();
-	      $form.append("<input type='hidden' name='reservation[stripe_token]' value='" + token + "'/>");
-	      $form.get(0).submit();
-	    }
-	  }
-	})
-
+<
+<script type="text/javascript">
+var app = angular.module('myApp', []);
+app.controller('myControl', function($scope, $http)
+ {
+    $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+        e.preventDefault();
+        $(this).siblings('a.active').removeClass("active");
+        $(this).addClass("active");
+        var index = $(this).index();
+        $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+        $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+       
+    });
+});
 </script>
-<div class="container">
-    <div class='row'>
-        <div class='col-md-4'></div>
-        <div class='col-md-4'>
-          <script src='https://js.stripe.com/v2/' type='text/javascript'></script>
-          <form accept-charset="UTF-8" action="/" class="require-validation" data-cc-on-file="false" data-stripe-publishable-key="pk_bQQaTxnaZlzv4FnnuZ28LFHccVSaj" id="payment-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓" /><input name="_method" type="hidden" value="PUT" /><input name="authenticity_token" type="hidden" value="qLZ9cScer7ZxqulsUWazw4x3cSEzv899SP/7ThPCOV8=" /></div>
-            <div class='form-row'>
-              <div class='col-xs-12 form-group required'>
-                <label class='control-label'>Name on Card</label>
-                <input class='form-control' size='4' type='text'>
-              </div>
-            </div>
-            <div class='form-row'>
-              <div class='col-xs-12 form-group card required'>
-                <label class='control-label'>Card Number</label>
-                <input autocomplete='off' class='form-control card-number' size='20' type='text'>
-              </div>
-            </div>
-            <div class='form-row'>
-              <div class='col-xs-4 form-group cvc required'>
-                <label class='control-label'>CVC</label>
-                <input autocomplete='off' class='form-control card-cvc' placeholder='ex. 311' size='4' type='text'>
-              </div>
-              <div class='col-xs-4 form-group expiration required'>
-                <label class='control-label'>Expiration</label>
-                <input class='form-control card-expiry-month' placeholder='MM' size='2' type='text'>
-              </div>
-              <div class='col-xs-4 form-group expiration required'>
-                <label class='control-label'> </label>
-                <input class='form-control card-expiry-year' placeholder='YYYY' size='4' type='text'>
-              </div>
-            </div>
-            <div class='form-row'>
-              <div class='col-md-12'>
-                <div class='form-control total btn btn-info'>
-                  Total:
-                  <span class='amount'>$300</span>
-                </div>
-              </div>
-            </div>
-            <div class='form-row'>
-              <div class='col-md-12 form-group'>
-                <button class='form-control btn btn-primary submit-button' type='submit'>Pay »</button>
-              </div>
-            </div>
-            <div class='form-row'>
-              <div class='col-md-12 error form-group hide'>
-                <div class='alert-danger alert'>
-                  Please correct the errors and try again.
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class='col-md-4'></div>
-    </div>
+<div data-ng-app="myApp" data-ng-controller="myControl"
+	class="container">
+	<h1>Choose your payment option</h1>
+	<br>
+
+	<div class="row">
+		<div class="col-xs-3">
+			<div class="bhoechie-tab-container">
+				<div class="bhoechie-tab-menu">
+					<div class="list-group">
+
+
+
+						<a href="#" class="list-group-item text-center">
+							<h4 class="glyphicon glyphicon-globe"></h4>
+							<br />Net Banking
+						</a> <a href="#" class="list-group-item text-center">
+							<h4 
+								class="glyphicon glyphicon-credit-card"></h4>
+							<br />Debit Card
+						</a> <a ng-click="netbanking=true" href="#" class="list-group-item text-center">
+							<h4 class="glyphicon glyphicon-usd"></h4>
+							<br />Cash on Delievery
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div  class="col-xs-6" id="debit">
+
+
+
+			<!-- CREDIT CARD FORM STARTS HERE -->
+			<div class="panel panel-default credit-card-box">
+				<div class="panel-heading display-table">
+					<div class="row display-tr">
+
+						<div class="display-td">
+							<img class="img-responsive pull-right"
+								src="http://i76.imgup.net/accepted_c22e0.png">
+						</div>
+					</div>
+				</div>
+				<div class="panel-body">
+					<form:form role="form" id="payment-form" method="POST">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="form-group">
+									<label for="cardNumber">CARD NUMBER</label>
+									<div class="input-group">
+										<input type="tel" class="form-control" name="cardNumber"
+											placeholder="Valid Card Number" autocomplete="cc-number"
+											required autofocus />
+										<span class="input-group-addon"><i
+											class="fa fa-credit-card"></i></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-7 col-md-7">
+								<div class="form-group">
+									<label for="cardExpiry"><span class="hidden-xs">EXPIRATION</span><span
+										class="visible-xs-inline">EXP</span> DATE</label> <input type="tel"
+										class="form-control" name="cardExpiry" placeholder="MM / YY"
+										autocomplete="cc-exp" required />
+								</div>
+							</div>
+							<div class="col-xs-5 col-md-5 pull-right">
+								<div class="form-group">
+									<label for="cardCVC">CV CODE</label> <input type="tel"
+										class="form-control" name="cardCVC" placeholder="CVC"
+										autocomplete="cc-csc" required />
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-xs-12">
+								<button class="subscribe btn btn-success btn-lg btn-block"
+									type="submit" name="_eventId_proceed" value="proceed">PROCEED</button>
+							</div>
+						</div>
+						<div class="row" style="display: none;">
+							<div class="col-xs-12">
+								<p class="payment-errors"></p>
+							</div>
+						</div>
+					</form:form>
+				</div>
+			</div>
+
+		</div>
+
+		<%-- <div data-ng-show="netbanking" 
+			class="col-xs-6" id="debit">
+<form:select path="" required="true"
+					class="form-control input-lg" placeholder="Select a bank">
+					<form:option value="Union Bank of India">Moto 360</form:option>
+					<form:option value="State Bank Of India">Huawei</form:option>
+					<form:option value="ICICI Bank">Intex</form:option>
+					<form:option value="Axis Bank">Samsung</form:option>
+					<form:option value="HDFC bank">Alcatel</form:option>
+					<form:option value="UCO Bank">Apple</form:option>
+					
+
+				</form:select>
+
+
+			
+
+		</div> --%>
+	</div>
 </div>
+

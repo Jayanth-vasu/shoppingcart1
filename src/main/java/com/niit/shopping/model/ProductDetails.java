@@ -41,7 +41,7 @@ public class ProductDetails implements Serializable {
 	private String product_brand;
 	
 
-	@Transient
+	@Transient 
 	private MultipartFile image;
 		
 	

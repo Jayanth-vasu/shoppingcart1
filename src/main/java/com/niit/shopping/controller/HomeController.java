@@ -92,11 +92,11 @@ public @ResponseBody List<ProductDetails>  brand(@PathVariable("brand") String p
 	
 	
 	@RequestMapping("/addtocart/{product_id}")
-	/*@ResponseStatus(value = HttpStatus.NO_CONTENT)*/
+	@ResponseStatus(value = HttpStatus.NO_CONTENT)
 	public String addtocart1(@PathVariable("product_id") int product_id,Principal activeuser,HttpSession session) {
 		
 		if(activeuser.getName()==null){
-			return "login";
+			return "redirect:/login";
 		}
 		else{
 		boolean isValid=false;
@@ -152,7 +152,7 @@ public @ResponseBody List<ProductDetails>  brand(@PathVariable("brand") String p
 		
 		productService.addCartProduct(cart);
 		*/
-		return "brand";
+		return "mycart";
 		}
 	}
 

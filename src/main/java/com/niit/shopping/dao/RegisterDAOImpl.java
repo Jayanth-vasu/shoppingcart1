@@ -1,12 +1,10 @@
 package com.niit.shopping.dao;
 
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.niit.shopping.model.ProductDetails;
 import com.niit.shopping.model.UserDetails;
 import com.niit.shopping.model.UserRole;
 

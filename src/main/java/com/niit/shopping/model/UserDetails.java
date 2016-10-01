@@ -21,7 +21,7 @@ public class UserDetails implements Serializable {
 
 
 	
-	@Id
+	
 	@Size(min = 2, max = 30)
 	private String user_firstname;
 
@@ -31,9 +31,9 @@ public class UserDetails implements Serializable {
 	@Size(min = 2, max = 10)
 	private String password;
 
-	@Size(min = 2, max = 10)
-	private String confirm_password;
+	
 
+	@Id
 	@Email
 	private String mail_id;
 
@@ -42,8 +42,8 @@ public class UserDetails implements Serializable {
 	
 	private boolean enabled;
 	
-	
-
+	@Transient
+	private String confirm_password;
 	
 
 	public boolean isEnabled() {
@@ -89,13 +89,7 @@ public class UserDetails implements Serializable {
 		this.password = password;
 	}
 
-	public String getConfirm_password() {
-		return confirm_password;
-	}
-
-	public void setConfirm_password(String confirm_password) {
-		this.confirm_password = confirm_password;
-	}
+	
 
 	public String getMail_id() {
 		return mail_id;
@@ -112,5 +106,15 @@ public class UserDetails implements Serializable {
 	public void setMobile_number(String mobile_number) {
 		this.mobile_number = mobile_number;
 	}
+
+	public String getConfirm_password() {
+		return confirm_password;
+	}
+
+	public void setConfirm_password(String confirm_password) {
+		this.confirm_password = confirm_password;
+	}
+	
+	
 
 }

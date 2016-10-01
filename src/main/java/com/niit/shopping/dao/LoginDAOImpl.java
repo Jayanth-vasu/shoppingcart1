@@ -24,7 +24,7 @@ import com.niit.shopping.model.UserDetails;
 		public boolean checkUser(UserDetails u) {
 			boolean isvaliduser=false;
 			
-			Query q=sessionFactory.openSession().createQuery("from UserDetails where user_firstname= '"+u.getUser_firstname()+"' and user_lastname='"+u.getUser_lastname()+"'");
+			Query q=sessionFactory.openSession().createQuery("from UserDetails where mail_id= '"+u.getMail_id()+"'");
 			List<UserDetails> ul= q.list();
 			int s=ul.size();
 			if(s==1)

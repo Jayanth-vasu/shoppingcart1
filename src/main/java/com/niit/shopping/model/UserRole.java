@@ -21,9 +21,11 @@ public class UserRole implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int role_id;
+	
 	@OneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-	@JoinColumn(name = "user_firstname")
+	@JoinColumn(name = "mail_id")
 	private UserDetails userDetails;
+	
 	private String role;
 
 	public String getRole() {
